@@ -10,6 +10,7 @@ import Foundation
 
 class Pokemon {
     
+    //Private properties
     private var _name: String!
     private var _pokemonId: Int!
     
@@ -30,6 +31,7 @@ class Pokemon {
         return _pokemonId
     }
     
+    //Initializer
     init(name: String, pokemonId: Int) {
         self._name = name
         self._pokemonId = pokemonId
