@@ -15,6 +15,7 @@
 		D5CB188A1E27F835003FC255 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D5CB18881E27F835003FC255 /* Main.storyboard */; };
 		D5CB188C1E27F835003FC255 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D5CB188B1E27F835003FC255 /* Assets.xcassets */; };
 		D5CB188F1E27F835003FC255 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D5CB188D1E27F835003FC255 /* LaunchScreen.storyboard */; };
+		D5FEEE721E2BF18900270091 /* csv.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5FEEE711E2BF18900270091 /* csv.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		D5CB188B1E27F835003FC255 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D5CB188E1E27F835003FC255 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D5CB18901E27F835003FC255 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D5FEEE711E2BF18900270091 /* csv.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = csv.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,6 +93,7 @@
 				D5CB18881E27F835003FC255 /* Main.storyboard */,
 				D5CB188B1E27F835003FC255 /* Assets.xcassets */,
 				D53878C31E27FFB500F76275 /* pokemon.csv */,
+				D5FEEE711E2BF18900270091 /* csv.swift */,
 				D5CB188D1E27F835003FC255 /* LaunchScreen.storyboard */,
 				D5CB18901E27F835003FC255 /* Info.plist */,
 			);
@@ -130,6 +133,7 @@
 					D5CB18801E27F835003FC255 = {
 						CreatedOnToolsVersion = 8.2.1;
 						DevelopmentTeam = 3983Y6QL49;
+						LastSwiftMigration = 0820;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -175,6 +179,7 @@
 				D5CB18871E27F835003FC255 /* ViewController.swift in Sources */,
 				D5CB18851E27F835003FC255 /* AppDelegate.swift in Sources */,
 				D5A2A6B71E28026100E3F230 /* Pokemon.swift in Sources */,
+				D5FEEE721E2BF18900270091 /* csv.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

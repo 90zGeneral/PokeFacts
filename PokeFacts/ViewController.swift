@@ -21,7 +21,42 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         
         collection.delegate = self
         collection.dataSource = self
+        
+        //Call function
+        parsePokemonCSV()
+        
 
+    }
+    
+    //Parsing the pokemon csv file
+    func parsePokemonCSV() {
+        
+        //Path to the pokemon.csv file
+        let path = Bundle.main.path(forResource: "pokemon", ofType: "csv")!
+        
+        //Error handling
+        do {
+            let csv = try CSV(contentsOfURL: path)
+            let rows = csv.rows
+            print(rows)
+            
+            //Loop over the array of dictionaries returned from rows
+            for row in rows {
+                
+                //Grab the name and id of each pokemon in the rows array
+                let pokeId = Int(row["id"]!)!
+                let pokeName = row["identifier"]!
+                
+                //Pass the name and id into a new instance of the Pokemon class
+                let eachPoke = Pokemon(name: pokeName, pokemonId: pokeId)
+                
+                //Append each new instance of Pokemon class to the pokemons array
+                pokemons.append(eachPoke)
+            }
+            
+        }catch {
+            print(error.localizedDescription)
+        }
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -29,14 +64,14 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 40
+        return pokemons.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PokeCell", for: indexPath) as? PokeCell {
-            let eachPokemon = Pokemon(name: "Pokemon", pokemonId: indexPath.item)
-            cell.configureCell(pokemon: eachPokemon)
+            let cellPokemon = pokemons[indexPath.row]
+            cell.configureCell(cellPokemon)
             return cell
             
         }else {

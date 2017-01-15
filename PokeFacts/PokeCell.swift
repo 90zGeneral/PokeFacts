@@ -22,7 +22,7 @@ class PokeCell: UICollectionViewCell {
     }
     
     //To configure each cell
-    func configureCell(pokemon: Pokemon) {
+    func configureCell(_ pokemon: Pokemon) {
         
         //Update the views in each cell
         pokeLbl.text = pokemon.name.capitalized

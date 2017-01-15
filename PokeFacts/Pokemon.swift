@@ -11,8 +11,8 @@ import Foundation
 class Pokemon {
     
     //Private properties
-    private var _name: String!
-    private var _pokemonId: Int!
+    fileprivate var _name: String!
+    fileprivate var _pokemonId: Int!
     
     //Getters
     var name: String {
