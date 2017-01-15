@@ -9,12 +9,17 @@
 import UIKit
 import AVFoundation
 
-class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UISearchBarDelegate {
 
     @IBOutlet weak var collection: UICollectionView!
+    @IBOutlet weak var searchBar: UISearchBar!
     
     //Array of Pokemons
     var pokemons = [Pokemon]()
+    
+    //Filtered array of Pokemon for the search bar AND the current status of search
+    var filteredPokemon = [Pokemon]()
+    var inSearchMode = false
     
     //Music player initialized
     var musicPlayer: AVAudioPlayer!
@@ -25,10 +30,14 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         
         collection.delegate = self
         collection.dataSource = self
+        searchBar.delegate = self
         
         //Call functions
         parsePokemonCSV()
         audioSetup()
+        
+        //Change the search button text in the keyboard to say "Done"
+        searchBar.returnKeyType = UIReturnKeyType.done
         
 
     }
@@ -93,14 +102,31 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return pokemons.count
+        
+        //To determine with array will hold the cell count
+        if inSearchMode {
+            return filteredPokemon.count
+        }else {
+            return pokemons.count
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PokeCell", for: indexPath) as? PokeCell {
-            let cellPokemon = pokemons[indexPath.row]
-            cell.configureCell(cellPokemon)
+            
+            let cellPokemon: Pokemon!
+            
+            //To determine which array will populate the cells
+            if inSearchMode {
+                cellPokemon = filteredPokemon[indexPath.row]
+                cell.configureCell(cellPokemon)
+                
+            }else {
+                cellPokemon = pokemons[indexPath.row]
+                cell.configureCell(cellPokemon)
+            }
+            
             return cell
             
         }else {
@@ -132,6 +158,36 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             //To make music button opaque
             sender.alpha = 1.0
         }
+    }
+    
+    //This method runs each time the search bar text changes
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        
+        //To determine search bar current status AND reload the collection view
+        if searchBar.text == nil || searchBar.text == "" {
+            inSearchMode = false
+            collection.reloadData()
+            view.endEditing(true)
+            
+        }else {
+            inSearchMode = true
+            
+            //Convert the search bar text to lowercase letters
+            let lower = searchBar.text!.lowercased()
+            
+            //Assign the pokemons array to the filtered array after it's been filtered with pokemon names containing the search bar text
+            filteredPokemon = pokemons.filter({($0.name.range(of: lower) != nil)})
+            
+            //Reload collection View
+            collection.reloadData()
+            
+        }
+        
+    }
+    
+    //Remove keyboard when search button press
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        view.endEditing(true)
     }
     
 }
