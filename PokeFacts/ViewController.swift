@@ -36,6 +36,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         
         //Error handling
         do {
+            //New instance of CSV class
             let csv = try CSV(contentsOfURL: path)
             let rows = csv.rows
             print(rows)

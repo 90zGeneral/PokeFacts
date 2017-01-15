@@ -30,6 +30,8 @@
 		D5CB188E1E27F835003FC255 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D5CB18901E27F835003FC255 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D5FEEE711E2BF18900270091 /* csv.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = csv.swift; sourceTree = "<group>"; };
+		D5FEEE741E2C049200270091 /* PokemonHollow.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = PokemonHollow.ttf; sourceTree = "<group>"; };
+		D5FEEE751E2C049200270091 /* PokemonSolid.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = PokemonSolid.ttf; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,15 +91,33 @@
 				D5A2A6B51E28022F00E3F230 /* Model */,
 				D5A2A6B41E28022500E3F230 /* View */,
 				D5A2A6B31E28021900E3F230 /* Controller */,
+				D5FEEE731E2C045700270091 /* Resources */,
+				D5FEEE761E2C05E700270091 /* Util */,
 				D5CB18841E27F835003FC255 /* AppDelegate.swift */,
 				D5CB18881E27F835003FC255 /* Main.storyboard */,
 				D5CB188B1E27F835003FC255 /* Assets.xcassets */,
-				D53878C31E27FFB500F76275 /* pokemon.csv */,
-				D5FEEE711E2BF18900270091 /* csv.swift */,
 				D5CB188D1E27F835003FC255 /* LaunchScreen.storyboard */,
 				D5CB18901E27F835003FC255 /* Info.plist */,
 			);
 			path = PokeFacts;
+			sourceTree = "<group>";
+		};
+		D5FEEE731E2C045700270091 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				D5FEEE741E2C049200270091 /* PokemonHollow.ttf */,
+				D5FEEE751E2C049200270091 /* PokemonSolid.ttf */,
+				D53878C31E27FFB500F76275 /* pokemon.csv */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		D5FEEE761E2C05E700270091 /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				D5FEEE711E2BF18900270091 /* csv.swift */,
+			);
+			name = Util;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
