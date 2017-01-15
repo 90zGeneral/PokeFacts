@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AVFoundation
 
 class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
 
@@ -15,6 +16,9 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     //Array of Pokemons
     var pokemons = [Pokemon]()
     
+    //Music player initialized
+    var musicPlayer: AVAudioPlayer!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -22,10 +26,34 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         collection.delegate = self
         collection.dataSource = self
         
-        //Call function
+        //Call functions
         parsePokemonCSV()
+        audioSetup()
         
 
+    }
+    
+    //Set up the audio player
+    func audioSetup() {
+        
+        //Path to the audio file
+        let audioPath = Bundle.main.path(forResource: "music", ofType: "mp3")!
+        
+        //Error handling
+        do {
+            
+            musicPlayer = try AVAudioPlayer(contentsOf: URL(string: audioPath)!)
+            musicPlayer.prepareToPlay()
+            
+            //Loop the song continuously
+            musicPlayer.numberOfLoops = -1
+            
+            //Begin playing
+            musicPlayer.play()
+            
+        }catch {
+            print(error.localizedDescription)
+        }
     }
     
     //Parsing the pokemon csv file
@@ -89,5 +117,22 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         
         return CGSize(width: 105, height: 105)
     }
+    
+    //To pause or play audio
+    @IBAction func musicBtnPressed(_ sender: UIButton) {
+        if musicPlayer.isPlaying {
+            musicPlayer.pause()
+            
+            //To make music button transparent
+            sender.alpha = 0.4
+            
+        }else {
+            musicPlayer.play()
+            
+            //To make music button opaque
+            sender.alpha = 1.0
+        }
+    }
+    
 }
 
