@@ -11,6 +11,17 @@ import UIKit
 class PokemonDetailsVC: UIViewController {
     
     @IBOutlet weak var name: UILabel!
+    @IBOutlet weak var mainImg: UIImageView!
+    @IBOutlet weak var descriptionLbl: UILabel!
+    @IBOutlet weak var typeLbl: UILabel!
+    @IBOutlet weak var defenseLbl: UILabel!
+    @IBOutlet weak var heightLbl: UILabel!
+    @IBOutlet weak var pokeFactsIDLbl: UILabel!
+    @IBOutlet weak var weightLbl: UILabel!
+    @IBOutlet weak var baseAttackLbl: UILabel!
+    @IBOutlet weak var currentEvolutionImg: UIImageView!
+    @IBOutlet weak var nextEvolutionImg: UIImageView!
+    @IBOutlet weak var evolutionLbl: UILabel!
     
     
     var pokemon: Pokemon!
@@ -22,4 +33,10 @@ class PokemonDetailsVC: UIViewController {
         
     }
 
+    //To go back to the MainVC
+    @IBAction func backBtnPressed(_ sender: UIButton) {
+        dismiss(animated: true, completion: nil)
+        
+    }
+    
 }
