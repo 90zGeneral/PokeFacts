@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  MainVC.swift
 //  PokeFacts
 //
 //  Created by Roydon Jeffrey on 1/12/17.
@@ -9,7 +9,7 @@
 import UIKit
 import AVFoundation
 
-class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UISearchBarDelegate {
+class MainVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UISearchBarDelegate {
 
     @IBOutlet weak var collection: UICollectionView!
     @IBOutlet weak var searchBar: UISearchBar!
@@ -18,7 +18,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     var pokemons = [Pokemon]()
     
     //Filtered array of Pokemon for the search bar AND the current status of search
-    var filteredPokemon = [Pokemon]()
+    var filteredPokemons = [Pokemon]()
     var inSearchMode = false
     
     //Music player initialized
@@ -105,7 +105,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         
         //To determine with array will hold the cell count
         if inSearchMode {
-            return filteredPokemon.count
+            return filteredPokemons.count
         }else {
             return pokemons.count
         }
@@ -119,7 +119,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             
             //To determine which array will populate the cells
             if inSearchMode {
-                cellPokemon = filteredPokemon[indexPath.row]
+                cellPokemon = filteredPokemons[indexPath.row]
                 cell.configureCell(cellPokemon)
                 
             }else {
@@ -135,13 +135,36 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         }
     }
     
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
-    }
-    
+    //A fixed height and width for each cell
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
         return CGSize(width: 105, height: 105)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        //Segue should perform regardless of search mode state
+        var poke: Pokemon!
+        
+        if inSearchMode {
+            poke = filteredPokemons[indexPath.row]
+            
+        }else {
+            poke = pokemons[indexPath.row]
+        }
+        
+        //Perform the segue based on the selected pokemon
+        performSegue(withIdentifier: "PokemonDetailsVC", sender: poke)
+        
+    }
+    
+    //Prepare to make the segue
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let destination = segue.destination as? PokemonDetailsVC {
+            if let poke = sender as? Pokemon {
+                destination.pokemon = poke
+            }
+        }
     }
     
     //To pause or play audio
@@ -176,7 +199,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             let lower = searchBar.text!.lowercased()
             
             //Assign the pokemons array to the filtered array after it's been filtered with pokemon names containing the search bar text
-            filteredPokemon = pokemons.filter({($0.name.range(of: lower) != nil)})
+            filteredPokemons = pokemons.filter({($0.name.range(of: lower) != nil)})
             
             //Reload collection View
             collection.reloadData()
