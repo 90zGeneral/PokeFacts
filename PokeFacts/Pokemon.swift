@@ -41,6 +41,70 @@ class Pokemon {
         return _pokemonId
     }
     
+    var description: String {
+        if _description == nil {
+            _description = ""
+        }
+        
+        return _description
+    }
+    
+    var type: String {
+        if _type == nil {
+            _type = ""
+        }
+        
+        return _type
+    }
+    
+    var defense: String {
+        if _defense == nil {
+            _defense = ""
+        }
+        
+        return _defense
+    }
+    
+    var height: String {
+        if _height == nil {
+            _height = ""
+        }
+        
+        return _height
+    }
+    
+    var weight: String {
+        if _weight == nil {
+            _weight = ""
+        }
+        
+        return _weight
+    }
+    
+    var attack: String {
+        if _attack == nil {
+            _attack = ""
+        }
+        
+        return _attack
+    }
+    
+    var evolution: String {
+        if _evolution == nil {
+            _evolution = ""
+        }
+        
+        return _evolution
+    }
+    
+    var pokemonURL: String {
+        if _pokemonURL == nil {
+            _pokemonURL = ""
+        }
+        
+        return _pokemonURL
+    }
+    
     //Initializer
     init(name: String, pokemonId: Int) {
         self._name = name
@@ -51,11 +115,44 @@ class Pokemon {
     }
     
     //To make the network call to the api
-    func downloadPokemonDetails(completed: DownloadComplete) {
+    func downloadPokemonDetails(completed: @escaping DownloadComplete) {
         
+        //GET request to the pokemonURL
         Alamofire.request(_pokemonURL).responseJSON { (response) in
             
-            print(response.result.value!)
+            //To store the json object being returned
+            if let dict = response.result.value! as? [String: Any] {
+                
+                //To ge the weight of the pokemon
+                if let weight = dict["weight"] as? String {
+                    self._weight = weight
+                }
+                
+                //To ge the height of the pokemon
+                if let height = dict["height"] as? String {
+                    self._height = height
+                }
+                
+                //To ge the attack of the pokemon
+                if let attack = dict["attack"] as? Int {
+                    self._attack = "\(attack)"
+                }
+                
+                //To ge the weight of the pokemon
+                if let defense = dict["defense"] as? Int {
+                    self._defense = "\(defense)"
+                }
+                
+                print(self._weight, self._height, self._attack, self._defense)
+                
+            }
+            //Call the closure to complete
+            completed()
         }
     }
 }
+
+
+
+
+

@@ -28,18 +28,22 @@ class PokemonDetailsVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
         
+        //Call the download function before the UI updates
         pokemon.downloadPokemonDetails {
+            
             self.updateUI()
         }
         
     }
     
-    //
+    //Update the UI
     func updateUI() {
         
+        weightLbl.text = pokemon.weight
+        heightLbl.text = pokemon.height
+        baseAttackLbl.text = pokemon.attack
+        defenseLbl.text = pokemon.defense
     }
 
     //To go back to the MainVC
