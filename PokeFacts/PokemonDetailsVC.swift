@@ -20,7 +20,6 @@ class PokemonDetailsVC: UIViewController {
 
         // Do any additional setup after loading the view.
         
-        name.text = pokemon.name.capitalized
     }
 
 }
