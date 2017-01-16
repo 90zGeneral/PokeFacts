@@ -31,6 +31,15 @@ class PokemonDetailsVC: UIViewController {
 
         // Do any additional setup after loading the view.
         
+        pokemon.downloadPokemonDetails {
+            self.updateUI()
+        }
+        
+    }
+    
+    //
+    func updateUI() {
+        
     }
 
     //To go back to the MainVC

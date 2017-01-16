@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Alamofire
 
 class Pokemon {
     
@@ -20,6 +21,7 @@ class Pokemon {
     fileprivate var _weight: String!
     fileprivate var _attack: String!
     fileprivate var _evolution: String!
+    fileprivate var _pokemonURL: String!
     
     
     //Getters
@@ -43,5 +45,17 @@ class Pokemon {
     init(name: String, pokemonId: Int) {
         self._name = name
         self._pokemonId = pokemonId
+        
+        //API URL based on the pokemon's ID number
+        self._pokemonURL = "\(URL_BASE)\(URL_POKEMON)\(self.pokemonId)"
+    }
+    
+    //To make the network call to the api
+    func downloadPokemonDetails(completed: DownloadComplete) {
+        
+        Alamofire.request(_pokemonURL).responseJSON { (response) in
+            
+            print(response.result.value!)
+        }
     }
 }
