@@ -24,6 +24,7 @@ class PokemonDetailsVC: UIViewController {
     @IBOutlet weak var evolutionLbl: UILabel!
     @IBOutlet weak var nowLbl: UILabel!
     @IBOutlet weak var laterLbl: UILabel!
+    @IBOutlet weak var evolStackView: UIStackView!
     
     
     var pokemon: Pokemon!
@@ -59,13 +60,14 @@ class PokemonDetailsVC: UIViewController {
         descriptionLbl.text = pokemon.description
         
         if pokemon.evolutionID == "" {
-            evolutionLbl.text = "No Evolution for this Pokemon"
+            evolutionLbl.text = "NO POKEMON EVOLUTION"
+            evolutionLbl.textColor = UIColor.black
             nextEvolutionImg.isHidden = true
             laterLbl.isHidden = true
-            nowLbl.isHidden = true
+            evolStackView.isHidden = true
             
         }else {
-            nowLbl.isHidden = false
+            evolStackView.isHidden = false
             laterLbl.isHidden = false
             nextEvolutionImg.isHidden = false
             nextEvolutionImg.image = UIImage(named: pokemon.evolutionID)
