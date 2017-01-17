@@ -21,6 +21,9 @@ class Pokemon {
     fileprivate var _weight: String!
     fileprivate var _attack: String!
     fileprivate var _evolution: String!
+    fileprivate var _evolutionName: String!
+    fileprivate var _evolutionID: String!
+    fileprivate var _evolutionLvl: String!
     fileprivate var _pokemonURL: String!
     
     
@@ -97,6 +100,30 @@ class Pokemon {
         return _evolution
     }
     
+    var evolutionName: String {
+        if _evolutionName == nil {
+            _evolutionName = ""
+        }
+        
+        return _evolutionName
+    }
+    
+    var evolutionID: String {
+        if _evolutionID == nil {
+            _evolutionID = ""
+        }
+        
+        return _evolutionID
+    }
+    
+    var evolutionLvl: String {
+        if _evolutionLvl == nil {
+            _evolutionLvl = ""
+        }
+        
+        return _evolutionLvl
+    }
+    
     var pokemonURL: String {
         if _pokemonURL == nil {
             _pokemonURL = ""
@@ -123,27 +150,92 @@ class Pokemon {
             //To store the json object being returned
             if let dict = response.result.value! as? [String: Any] {
                 
-                //To ge the weight of the pokemon
+                //To get the weight of the pokemon
                 if let weight = dict["weight"] as? String {
                     self._weight = weight
                 }
                 
-                //To ge the height of the pokemon
+                //To get the height of the pokemon
                 if let height = dict["height"] as? String {
                     self._height = height
                 }
                 
-                //To ge the attack of the pokemon
+                //To get the attack of the pokemon
                 if let attack = dict["attack"] as? Int {
                     self._attack = "\(attack)"
                 }
                 
-                //To ge the weight of the pokemon
+                //To get the weight of the pokemon
                 if let defense = dict["defense"] as? Int {
                     self._defense = "\(defense)"
                 }
                 
-                print(self._weight, self._height, self._attack, self._defense)
+                //To get the type of the pokemon
+                if let typesArr = dict["types"] as? [[String: Any]] {
+                     var type = ""
+                    
+                    //Loop over the array
+                    for obj in typesArr {
+                        if let name = obj["name"] as? String {
+                            type += name + "/"
+                        }
+                    }
+                    
+                    //To remove the forward slash from the end of the string
+                    if type.characters.last == "/" {
+                        type.remove(at: type.index(before: type.endIndex))
+                    }
+                    
+                    self._type = type.capitalized
+                }
+                
+                //To get the description of the pokemon
+                if let descArr = dict["descriptions"] as? [[String: Any]] {
+                    if let descURL = descArr[0]["resource_uri"] as? String {
+                        
+                        //Make a full url using the base url and the provided part for the description
+                        let fullURL = "\(URL_BASE)\(descURL)"
+                        
+                        //Second network request
+                        Alamofire.request(fullURL).responseJSON(completionHandler: { (response) in
+                            if let descDict = response.result.value as? [String: Any] {
+                                if let description = descDict["description"] as? String {
+                                    
+                                    let newDescription = description.replacingOccurrences(of: "POKMON", with: "Pokemon")
+                                    
+                                    print(newDescription)
+                                    self._description = newDescription
+                                }
+                            }
+                            completed()
+                        })
+                    }
+                }
+                
+                //To get the evolution of the pokemon
+                if let evolArr = dict["evolutions"] as? [[String: Any]] {
+                    if let evolTo = evolArr[0]["to"] as? String {
+                        
+                        //Exclude all evolutions with mega in its name
+                        if evolTo.range(of: "mega") == nil {
+                            self._evolutionName = evolTo
+                            
+                            if let uri = evolArr[0]["resource_uri"] as? String {
+                                let newStr = uri.replacingOccurrences(of: "/api/v1/pokemon/", with: "")
+                                let evoID = newStr.replacingOccurrences(of: "/", with: "")
+                                
+                                self._evolutionID = evoID
+                                
+                                if let lvlExist = evolArr[0]["level"] as? Int {
+                                    self._evolutionLvl = "\(lvlExist)"
+                                    
+                                }else {
+                                    self._evolutionLvl = "NONE"
+                                }
+                            }
+                        }
+                    }
+                }
                 
             }
             //Call the closure to complete

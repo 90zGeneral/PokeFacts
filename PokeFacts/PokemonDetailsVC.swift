@@ -22,12 +22,24 @@ class PokemonDetailsVC: UIViewController {
     @IBOutlet weak var currentEvolutionImg: UIImageView!
     @IBOutlet weak var nextEvolutionImg: UIImageView!
     @IBOutlet weak var evolutionLbl: UILabel!
+    @IBOutlet weak var nowLbl: UILabel!
+    @IBOutlet weak var laterLbl: UILabel!
     
     
     var pokemon: Pokemon!
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        //Update name and ID
+        name.text = pokemon.name.capitalized
+        pokeFactsIDLbl.text = "\(pokemon.pokemonId)"
+        
+        //Update the current pokemon images
+        let img = UIImage(named: "\(pokemon.pokemonId)")
+        mainImg.image = img
+        currentEvolutionImg.image = img
+        
         
         //Call the download function before the UI updates
         pokemon.downloadPokemonDetails {
@@ -39,11 +51,26 @@ class PokemonDetailsVC: UIViewController {
     
     //Update the UI
     func updateUI() {
-        
         weightLbl.text = pokemon.weight
         heightLbl.text = pokemon.height
         baseAttackLbl.text = pokemon.attack
         defenseLbl.text = pokemon.defense
+        typeLbl.text = pokemon.type
+        descriptionLbl.text = pokemon.description
+        
+        if pokemon.evolutionID == "" {
+            evolutionLbl.text = "No Evolution for this Pokemon"
+            nextEvolutionImg.isHidden = true
+            laterLbl.isHidden = true
+            nowLbl.isHidden = true
+            
+        }else {
+            nowLbl.isHidden = false
+            laterLbl.isHidden = false
+            nextEvolutionImg.isHidden = false
+            nextEvolutionImg.image = UIImage(named: pokemon.evolutionID)
+            evolutionLbl.text = "Next Evolution: \(pokemon.evolutionName) - LVL: \(pokemon.evolutionLvl)"
+        }
     }
 
     //To go back to the MainVC
