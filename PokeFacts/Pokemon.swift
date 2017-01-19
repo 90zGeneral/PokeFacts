@@ -213,7 +213,7 @@ class Pokemon {
                 }
                 
                 //To get the evolution of the pokemon
-                if let evolArr = dict["evolutions"] as? [[String: Any]] {
+                if let evolArr = dict["evolutions"] as? [[String: Any]] , evolArr.count > 0 {
                     if let evolTo = evolArr[0]["to"] as? String {
                         
                         //Exclude all evolutions with mega in its name
