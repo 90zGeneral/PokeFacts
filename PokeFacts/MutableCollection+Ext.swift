@@ -1,0 +1,13 @@
+//
+//  MutableCollection+Ext.swift
+//  PokeFacts
+//
+//  Created by Roydon Jeffrey on 1/24/17.
+//  Copyright © 2017 Italyte. All rights reserved.
+//
+
+import Foundation
+
+extension MutableCollection where Index == Int {
+    //
+}
